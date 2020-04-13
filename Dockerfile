@@ -1,4 +1,4 @@
-ARG BASEIMAGE=ubuntu:16.04
+ARG BASEIMAGE=ubuntu:18.04
 FROM ${BASEIMAGE}
 
 ARG BUILD_DATE
@@ -16,11 +16,10 @@ LABEL mantainer="Eloy Lopez <elswork@gmail.com>" \
     org.label-schema.version=$VERSION \
     org.label-schema.schema-version="1.0"
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN add-apt-repository -y ppa:deadsnakes/ppa && apt-get update && apt-get install -y --no-install-recommends \
     libatlas-base-dev \
-    python3-dev python3-pip python3-h5py && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    python3-dev python3-pip python3.7 && \
+    apt-get clean
 
 RUN mkdir -p $HOME/.config/pip && \
     touch $HOME/.config/pip/pip.conf && \
